@@ -12,11 +12,13 @@ namespace AuthServer
             {
                 new ApiResource("resource_api1")
                 {
-                    Scopes = { "api1.read", "api1.write", "api1.update" }
+                    Scopes = { "api1.read", "api1.write", "api1.update" },
+                    ApiSecrets = new[] { new Secret ("secret_api1".Sha256()) }
                 },
                 new ApiResource("resource_api2")
                 {
-                    Scopes = { "api2.read", "api2.write", "api2.update" }
+                    Scopes = { "api2.read", "api2.write", "api2.update" },
+                    ApiSecrets = new[] { new Secret ("secret_api2".Sha256()) }
                 }
             };
         }
