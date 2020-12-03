@@ -25,5 +25,18 @@ namespace API1.Controllers
 
             return Ok(productList);
         }
+
+        [Authorize(Policy = "UpdateOrCreate")]
+        public IActionResult UpdateProduct(int id)
+        {
+            return Ok($"Ürün {id} güncellenmiştir.");
+        }
+
+        [Authorize(Policy = "UpdateOrCreate")]
+        public IActionResult CreateProduct(Product product)
+        {
+            return Ok(product);
+        }
     }
+
 }

@@ -39,6 +39,21 @@ namespace API1
                     options.Audience = "resource_api1";
                 });
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ReadProduct", policy =>
+                {
+                    // [Authorize(Policy = "ReadProduct")] attribute'u eklenen
+                    // controller action'a sadece
+                    // scope claim'i api1.read değerini içeren token'lar erişebilir
+                    policy.RequireClaim("scope", "api1.read");
+                });
+                options.AddPolicy("UpdateOrCreate", policy =>
+                {
+                    policy.RequireClaim("scope", new[] { "api1.write", "api1.update" });
+                });
+            });
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
