@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +27,17 @@ namespace API1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Uyelik tipleri tanımlanabilir
+            // services.AddAuthentication("BayiUyelik")
+            // services.AddAuthentication("NormalUyelik")
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+                {
+                    // Access token'ı yayınlayan, AuthServer
+                    options.Authority = "https://localhost:4001";
+                    // Veriyi alacak kim, gelen token'ın aud değeriyle eşleşmeli
+                    options.Audience = "resource_api1";
+                });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -48,6 +60,7 @@ namespace API1
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -46,7 +46,7 @@ namespace AuthServer
                     ClientName = "Client 1 WebApp",
                     ClientSecrets = { new Secret("secret".Sha256()) },
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    AllowedScopes = { "api1.read", "api2.write", "api2.update" }
+                    AllowedScopes = { "api1.read" }
                 },
                 new Client
                 {
