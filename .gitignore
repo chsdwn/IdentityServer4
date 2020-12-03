@@ -376,3 +376,5 @@ lcov.info
 
 # ffmpeg
 ffmpeg.exe
+
+*.jwk

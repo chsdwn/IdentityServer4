@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using IdentityServer4.Models;
 
 namespace AuthServer
@@ -39,8 +38,6 @@ namespace AuthServer
         // API'ları kullanacak Client'lar
         public static IEnumerable<Client> GetClients()
         {
-            var a = new List<string> { "", "" };
-
             return new List<Client>
             {
                 new Client
