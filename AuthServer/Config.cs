@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Security.Claims;
 using IdentityServer4.Models;
+using IdentityServer4.Test;
 
 namespace AuthServer
 {
@@ -57,6 +59,47 @@ namespace AuthServer
                     ClientSecrets = { new Secret("secret".Sha256()) },
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     AllowedScopes = { "api1.read", "api1.update", "api2.write", "api2.update" }
+                }
+            };
+        }
+
+        public static IEnumerable<IdentityResource> GetIdentityResources()
+        {
+            return new List<IdentityResource>
+            {
+                /* ZORUNLU */
+                // Kullanıcı işlemleri için mutlaka olmalı.
+                // Token'a subject id ekler. Hangi kullanıcı için üretildiğini belirtir.
+                new IdentityResources.OpenId(), // subId
+                new IdentityResources.Profile()
+            };
+        }
+
+        public static IEnumerable<TestUser> GetTestUsers()
+        {
+            return new List<TestUser>
+            {
+                new TestUser
+                {
+                    SubjectId = "1",
+                    Username = "User1",
+                    Password = "12345",
+                    Claims = new List<Claim>
+                    {
+                        new Claim("given_name", "Ali"),
+                        new Claim("family_name", "Veli"),
+                    }
+                },
+                new TestUser
+                {
+                    SubjectId = "2",
+                    Username = "User2",
+                    Password = "12345",
+                    Claims = new List<Claim>
+                    {
+                        new Claim("given_name", "Ayşe"),
+                        new Claim("family_name", "Fatma"),
+                    }
                 }
             };
         }
