@@ -10,7 +10,7 @@ namespace API1.Controllers
     public class ProductsController : ControllerBase
     {
         // api/product/getproducts
-        [Authorize]
+        [Authorize(Policy = "ReadProduct")]
         [HttpGet]
         public IActionResult GetProducts()
         {

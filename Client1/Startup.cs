@@ -39,6 +39,8 @@ namespace Client1
                     options.ResponseType = "code id_token";
                     // Bütün claimleri çekip, giriş yapmış olan kullanıcının bilgilerine ekler.
                     options.GetClaimsFromUserInfoEndpoint = true;
+                    // Access ve refresh token değerlerini cookie'ye ekler.
+                    options.SaveTokens = true;
                 });
 
             services.AddControllersWithViews();
