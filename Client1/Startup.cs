@@ -37,6 +37,8 @@ namespace Client1
                     options.ClientSecret = "secret";
                     // code: Authorization code. id_token: doğrulama kodu. token: access token
                     options.ResponseType = "code id_token";
+                    // Bütün claimleri çekip, giriş yapmış olan kullanıcının bilgilerine ekler.
+                    options.GetClaimsFromUserInfoEndpoint = true;
                 });
 
             services.AddControllersWithViews();
