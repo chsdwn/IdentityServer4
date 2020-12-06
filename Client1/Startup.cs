@@ -41,6 +41,7 @@ namespace Client1
                     options.GetClaimsFromUserInfoEndpoint = true;
                     // Access ve refresh token değerlerini cookie'ye ekler.
                     options.SaveTokens = true;
+                    options.Scope.Add("api1.read");
                 });
 
             services.AddControllersWithViews();
