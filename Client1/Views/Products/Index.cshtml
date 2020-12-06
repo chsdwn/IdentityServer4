@@ -1,0 +1,10 @@
+@model List<Client1.Models.Product>
+
+<h1>Products Page</h1>
+
+<ul>
+@foreach(var product in Model)
+{
+        <li>@product.Id. @product.Name - $@product.Price - @product.Stock</li>
+}
+</ul>
