@@ -71,6 +71,7 @@ namespace AuthServer
                     AllowedGrantTypes = GrantTypes.Hybrid,
                     // Client1'e open id connect eklendiği için /signin-oidc/ endpoint'i otomatik oluştu.
                     RedirectUris = new[] { "https://localhost:7001/signin-oidc" },
+                    PostLogoutRedirectUris = new[] { "https://localhost:7001/signout-callback-oidc" },
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
@@ -80,13 +81,13 @@ namespace AuthServer
                         "api1.read"
                     },
                     RequirePkce = false,
-                    AccessTokenLifetime = DateTime.UtcNow.AddHours(3).Second,
+                    AccessTokenLifetime = 2 * 60 * 60,
                     // Refresh token'ı aktifleştirir.
                     AllowOfflineAccess = true,
                     // Refresh token'ın kaç kez kullanılabileceğini ayarlar.
                     RefreshTokenUsage = TokenUsage.ReUse,
                     // 60 içerisinde istek yapılsada yapılmasada refresh token'ın geçerliliği biter.
-                    AbsoluteRefreshTokenLifetime = DateTime.UtcNow.AddDays(60).Second
+                    AbsoluteRefreshTokenLifetime = (int)(DateTime.UtcNow.AddDays(60) - DateTime.UtcNow).TotalSeconds
                     // 5 gün içinde istek yapıldığında refresh token'ın ömrünü beş gün daha uzatır.
                     // SlidingRefreshTokenLifetime = DateTime.AddDays(5).Second
                 }
