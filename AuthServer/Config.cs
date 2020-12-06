@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Security.Claims;
+using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
 
@@ -59,6 +60,21 @@ namespace AuthServer
                     ClientSecrets = { new Secret("secret".Sha256()) },
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     AllowedScopes = { "api1.read", "api1.update", "api2.write", "api2.update" }
+                },
+                new Client
+                {
+                    ClientId = "Client1_MVC",
+                    ClientName = "Client 1 MVC",
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+                    // response_type: code id_token
+                    AllowedGrantTypes = GrantTypes.Hybrid,
+                    // Client1'e open id connect eklendiği için /signin-oidc/ endpoint'i otomatik oluştu.
+                    RedirectUris = new[] { "https://localhost:7001/signin-oidc" },
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile
+                    }
                 }
             };
         }
