@@ -13,16 +13,32 @@ namespace Client1
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = "Cookies";
+                options.DefaultChallengeScheme = "oidc";
+            }).AddCookie("Cookies")
+                .AddOpenIdConnect("oidc", options =>
+                {
+                    options.SignInScheme = "Cookies";
+                    // Yetkili. Token gönderen.
+                    options.Authority = "https://localhost:4001";
+                    options.ClientId = "Client1_MVC";
+                    options.ClientSecret = "secret";
+                    // code: Authorization code. id_token: doğrulama kodu. token: access token
+                    options.ResponseType = "code id_token";
+                });
+
             services.AddControllersWithViews();
         }
 
