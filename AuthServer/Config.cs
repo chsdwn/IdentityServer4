@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using IdentityServer4;
@@ -74,9 +75,20 @@ namespace AuthServer
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
+                        // Refresh token scope
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
                         "api1.read"
                     },
-                    RequirePkce = false
+                    RequirePkce = false,
+                    AccessTokenLifetime = DateTime.UtcNow.AddHours(3).Second,
+                    // Refresh token'ı aktifleştirir.
+                    AllowOfflineAccess = true,
+                    // Refresh token'ın kaç kez kullanılabileceğini ayarlar.
+                    RefreshTokenUsage = TokenUsage.ReUse,
+                    // 60 içerisinde istek yapılsada yapılmasada refresh token'ın geçerliliği biter.
+                    AbsoluteRefreshTokenLifetime = DateTime.UtcNow.AddDays(60).Second
+                    // 5 gün içinde istek yapıldığında refresh token'ın ömrünü beş gün daha uzatır.
+                    // SlidingRefreshTokenLifetime = DateTime.AddDays(5).Second
                 }
             };
         }

@@ -42,6 +42,8 @@ namespace Client1
                     // Access ve refresh token değerlerini cookie'ye ekler.
                     options.SaveTokens = true;
                     options.Scope.Add("api1.read");
+                    // Refresh token scope
+                    options.Scope.Add("offline_access");
                 });
 
             services.AddControllersWithViews();
