@@ -1,1 +1,23 @@
+@using Microsoft.AspNetCore.Authentication
+
 <h1>Users Secret Page</h1>
+
+<div>
+    <h2>Claims</h2>
+    <ul>
+        @foreach (var claim in User.Claims)
+        {
+            <li>@claim.Type = @claim.Value</li>
+        }
+    </ul>
+</div>
+
+<div>
+    <h2>Authentication</h2>
+    <ul>
+        @foreach (var item in (await Context.AuthenticateAsync()).Properties.Items) // Context = HttpContext
+        {
+            <li>@item.Key = @item.Value</li>
+        }
+    </ul>
+</div>
