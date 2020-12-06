@@ -74,7 +74,8 @@ namespace AuthServer
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile
-                    }
+                    },
+                    RequirePkce = false
                 }
             };
         }

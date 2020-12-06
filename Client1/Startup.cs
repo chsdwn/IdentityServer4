@@ -59,7 +59,8 @@ namespace Client1
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthentication();    // kimlik doğrulama
+            app.UseAuthorization();     // yetki kontrolü
 
             app.UseEndpoints(endpoints =>
             {
