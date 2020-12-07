@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -37,13 +38,22 @@ namespace Client1
                     options.ClientSecret = "secret";
                     // code: Authorization code. id_token: doğrulama kodu. token: access token
                     options.ResponseType = "code id_token";
+                    // Access token'da claim bilgileri bulunmaz. Scope'lar bulunur.
+                    // Giriş yapıldıktan sonra user endpoint'ten claim'ler alınır.
                     // Bütün claimleri çekip, giriş yapmış olan kullanıcının bilgilerine ekler.
                     options.GetClaimsFromUserInfoEndpoint = true;
                     // Access ve refresh token değerlerini cookie'ye ekler.
                     options.SaveTokens = true;
+
                     options.Scope.Add("api1.read");
                     // Refresh token scope
                     options.Scope.Add("offline_access");
+                    options.Scope.Add("CountryAndCity");
+
+                    // Custom claim'ler manuel olarak map'lenmeli. Yoksa user claim'leri içinde görünmez.
+                    // CountryAndCity: { "country", "city" }
+                    options.ClaimActions.MapUniqueJsonKey("country", "country");
+                    options.ClaimActions.MapUniqueJsonKey("city", "city");
                 });
 
             services.AddControllersWithViews();
