@@ -11,6 +11,7 @@
     <div class="row">
 
         @if (Model.EnableLocalLogin)
+
         {
             <div class="col-sm-6">
                 <div class="card">
@@ -23,14 +24,16 @@
                             <input type="hidden" asp-for="ReturnUrl" />
 
                             <div class="form-group">
-                                <label asp-for="Username"></label>
-                                <input class="form-control" placeholder="Username" asp-for="Username" autofocus>
+                                <label asp-for="Email"></label>
+                                <input class="form-control" placeholder="Email" asp-for="Email" autofocus>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Password"></label>
-                                <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
+                                <input type="password" class="form-control" placeholder="Password" asp-for="Password"
+                                    autocomplete="off">
                             </div>
                             @if (Model.AllowRememberLogin)
+
                             {
                                 <div class="form-group">
                                     <div class="form-check">
@@ -40,6 +43,7 @@
                                         </label>
                                     </div>
                                 </div>
+
                             }
                             <button class="btn btn-primary" name="button" value="login">Login</button>
                             <button class="btn btn-secondary" name="button" value="cancel">Cancel</button>
@@ -47,9 +51,11 @@
                     </div>
                 </div>
             </div>
+
         }
 
         @if (Model.VisibleExternalProviders.Any())
+
         {
             <div class="col-sm-6">
                 <div class="card">
@@ -59,29 +65,32 @@
                     <div class="card-body">
                         <ul class="list-inline">
                             @foreach (var provider in Model.VisibleExternalProviders)
+
                             {
                                 <li class="list-inline-item">
-                                    <a class="btn btn-secondary"
-                                       asp-controller="External"
-                                       asp-action="Challenge"
-                                       asp-route-scheme="@provider.AuthenticationScheme"
-                                       asp-route-returnUrl="@Model.ReturnUrl">
+                                    <a class="btn btn-secondary" asp-controller="External" asp-action="Challenge"
+                                        asp-route-scheme="@provider.AuthenticationScheme"
+                                        asp-route-returnUrl="@Model.ReturnUrl">
                                         @provider.DisplayName
                                     </a>
                                 </li>
+
                             }
                         </ul>
                     </div>
                 </div>
             </div>
+
         }
 
         @if (!Model.EnableLocalLogin && !Model.VisibleExternalProviders.Any())
+
         {
             <div class="alert alert-warning">
                 <strong>Invalid login request</strong>
                 There are no login schemes configured for this request.
             </div>
+
         }
     </div>
 </div>
