@@ -149,7 +149,7 @@ namespace AuthServer
                     },
                     RedirectUris = { "http://localhost:4200/callback" },
                     PostLogoutRedirectUris = { "http://localhost:4200" },
-                    AllowedCorsOrigins = { "http://localhost/4200" },
+                    AllowedCorsOrigins = { "http://localhost:4200" },
                 }
             };
         }
