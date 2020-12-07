@@ -127,6 +127,29 @@ namespace AuthServer
                     AbsoluteRefreshTokenLifetime = (int)(DateTime.UtcNow.AddDays(60) - DateTime.UtcNow).TotalSeconds
                     // 5 gün içinde istek yapıldığında refresh token'ın ömrünü beş gün daha uzatır.
                     // SlidingRefreshTokenLifetime = DateTime.AddDays(5).Second
+                },
+                new Client
+                {
+                    ClientId = "js-client",
+                    ClientName = "JS Client Angular",
+                    // Mobil ve SPA app'larda secret tutmak güvenlik açığı oluşturur.
+                    // ClientSecrets = "secret,
+                    RequireClientSecret = false,
+                    AllowedGrantTypes = GrantTypes.Code,
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email,
+                        // Refresh token scope
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
+                        "api1.read",
+                        "CountryAndCity",
+                        "Roles"
+                    },
+                    RedirectUris = { "http://localhost:4200/callback" },
+                    PostLogoutRedirectUris = { "http://localhost:4200" },
+                    AllowedCorsOrigins = { "http://localhost/4200" },
                 }
             };
         }
