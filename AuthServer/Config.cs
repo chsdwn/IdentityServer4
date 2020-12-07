@@ -83,8 +83,39 @@ namespace AuthServer
                         "Roles"
                     },
                     RequirePkce = false,
-                    // Consent(Onay) sayfasını etkinleştirir.
-                    RequireConsent = true,
+                    AccessTokenLifetime = 2 * 60 * 60,
+                    // Refresh token'ı aktifleştirir.
+                    // Offline Access etkinken kullanıcı her girişinde Consent(Onay) sayfasından onay vermek zorunda
+                    AllowOfflineAccess = true,
+                    // Yenilendiğinde aynı refresh token'ı döndürür.
+                    RefreshTokenUsage = TokenUsage.ReUse,
+                    // 60 içerisinde istek yapılsada yapılmasada refresh token'ın geçerliliği biter.
+                    AbsoluteRefreshTokenLifetime = (int)(DateTime.UtcNow.AddDays(60) - DateTime.UtcNow).TotalSeconds
+                    // 5 gün içinde istek yapıldığında refresh token'ın ömrünü beş gün daha uzatır.
+                    // SlidingRefreshTokenLifetime = DateTime.AddDays(5).Second
+                },
+                new Client
+                {
+                    ClientId = "Client2_MVC",
+                    ClientName = "Client 2 MVC",
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+                    // response_type: code id_token
+                    AllowedGrantTypes = GrantTypes.Hybrid,
+                    // Client1'e open id connect eklendiği için /signin-oidc/ endpoint'i otomatik oluştu.
+                    RedirectUris = new[] { "https://localhost:8001/signin-oidc" },
+                    PostLogoutRedirectUris = new[] { "https://localhost:8001/signout-callback-oidc" },
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        // Refresh token scope
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
+                        "api1.read",
+                        "api2.read",
+                        "CountryAndCity",
+                        "Roles"
+                    },
+                    RequirePkce = false,
                     AccessTokenLifetime = 2 * 60 * 60,
                     // Refresh token'ı aktifleştirir.
                     // Offline Access etkinken kullanıcı her girişinde Consent(Onay) sayfasından onay vermek zorunda
