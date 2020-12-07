@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Client1
 {
@@ -49,11 +50,20 @@ namespace Client1
                     // Refresh token scope
                     options.Scope.Add("offline_access");
                     options.Scope.Add("CountryAndCity");
+                    options.Scope.Add("Roles");
 
                     // Custom claim'ler manuel olarak map'lenmeli. Yoksa user claim'leri içinde görünmez.
                     // CountryAndCity: { "country", "city" }
                     options.ClaimActions.MapUniqueJsonKey("country", "country");
                     options.ClaimActions.MapUniqueJsonKey("city", "city");
+                    options.ClaimActions.MapUniqueJsonKey("role", "role");
+
+                    // [Authorize(Roles = "")] attribute'u kullanıldığı zaman role'ü kontrol etmek için
+                    // role claim'ine bakacak.
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        RoleClaimType = "role"
+                    };
                 });
 
             services.AddControllersWithViews();

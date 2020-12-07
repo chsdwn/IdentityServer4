@@ -79,7 +79,8 @@ namespace AuthServer
                         // Refresh token scope
                         IdentityServerConstants.StandardScopes.OfflineAccess,
                         "api1.read",
-                        "CountryAndCity"
+                        "CountryAndCity",
+                        "Roles"
                     },
                     RequirePkce = false,
                     // Consent(Onay) sayfasını etkinleştirir.
@@ -107,7 +108,8 @@ namespace AuthServer
                 // Token'a subject id ekler. Hangi kullanıcı için üretildiğini belirtir.
                 new IdentityResources.OpenId(), // subId
                 new IdentityResources.Profile(),
-                new IdentityResource("CountryAndCity", "Country and City", new[] {"country", "city"})
+                new IdentityResource("CountryAndCity", "Country and City", new[] {"country", "city"}),
+                new IdentityResource("Roles", "Roles", new[] { "role" })
             };
         }
 
@@ -125,7 +127,8 @@ namespace AuthServer
                         new Claim("given_name", "Ali"),
                         new Claim("family_name", "Veli"),
                         new Claim("country", "Turkey"),
-                        new Claim("city", "Konya")
+                        new Claim("city", "Konya"),
+                        new Claim("role", "admin")
                     }
                 },
                 new TestUser
@@ -138,7 +141,8 @@ namespace AuthServer
                         new Claim("given_name", "Ayşe"),
                         new Claim("family_name", "Fatma"),
                         new Claim("country", "Turkey"),
-                        new Claim("city", "İzmir")
+                        new Claim("city", "İzmir"),
+                        new Claim("role", "customer")
                     }
                 }
             };
