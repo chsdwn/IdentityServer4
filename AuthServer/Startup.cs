@@ -38,9 +38,10 @@ namespace AuthServer
                 .AddInMemoryApiScopes(Config.GetApiScopes())
                 .AddInMemoryClients(Config.GetClients())
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
-                .AddTestUsers(Config.GetTestUsers().ToList())
+                // .AddTestUsers(Config.GetTestUsers().ToList())
                 // Geliştirme esnasında public ve private keyi otomatik oluşturur.
-                .AddDeveloperSigningCredential();
+                .AddDeveloperSigningCredential()
+                .AddProfileService<CustomProfileService>();
 
             services.AddControllersWithViews();
         }
