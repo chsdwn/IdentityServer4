@@ -84,7 +84,7 @@ namespace AuthServer
                     AccessTokenLifetime = 2 * 60 * 60,
                     // Refresh token'ı aktifleştirir.
                     AllowOfflineAccess = true,
-                    // Refresh token'ın kaç kez kullanılabileceğini ayarlar.
+                    // Yenilendiğinde aynı refresh token'ı döndürür.
                     RefreshTokenUsage = TokenUsage.ReUse,
                     // 60 içerisinde istek yapılsada yapılmasada refresh token'ın geçerliliği biter.
                     AbsoluteRefreshTokenLifetime = (int)(DateTime.UtcNow.AddDays(60) - DateTime.UtcNow).TotalSeconds
