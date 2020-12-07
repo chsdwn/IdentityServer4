@@ -81,8 +81,11 @@ namespace AuthServer
                         "api1.read"
                     },
                     RequirePkce = false,
+                    // Consent(Onay) sayfasını etkinleştirir.
+                    RequireConsent = true,
                     AccessTokenLifetime = 2 * 60 * 60,
                     // Refresh token'ı aktifleştirir.
+                    // Offline Access etkinken kullanıcı her girişinde Consent(Onay) sayfasından onay vermek zorunda
                     AllowOfflineAccess = true,
                     // Yenilendiğinde aynı refresh token'ı döndürür.
                     RefreshTokenUsage = TokenUsage.ReUse,
