@@ -4,12 +4,16 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Client1.Models;
 using IdentityModel.Client;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Newtonsoft.Json;
 
 namespace Client1.Controllers
 {
+    [Authorize]
     public class ProductsController : Controller
     {
         private readonly IConfiguration _configuration;
@@ -23,23 +27,14 @@ namespace Client1.Controllers
         {
             var httpClient = new HttpClient();
 
-            // Discovery endpoint: /.well-known/openid-configuration
-            var discovery = await httpClient.GetDiscoveryDocumentAsync("https://localhost:4001");
-            if (discovery.IsError)
-                Console.WriteLine(discovery.Error);
+            var accessToken = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
 
-            var tokenReq = new ClientCredentialsTokenRequest();
-            tokenReq.ClientId = _configuration["Client:ClientId"];
-            tokenReq.ClientSecret = _configuration["Client:ClientSecret"];
-            tokenReq.Address = discovery.TokenEndpoint; // /connect/token
-
-            var token = await httpClient.RequestClientCredentialsTokenAsync(tokenReq);
-            if (token.IsError)
-                Console.WriteLine(token.Error);
-
-            httpClient.SetBearerToken(token.AccessToken);
+            httpClient.SetBearerToken(accessToken);
 
             var response = await httpClient.GetAsync("https://localhost:5001/api/products/getproducts");
+            // httpClient.PostAsync();
+            // httpClient.PutAsync();
+            // httpClient.DeleteAsync();
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
