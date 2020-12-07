@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Client1.Models;
+using Client1.Services;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -17,19 +18,17 @@ namespace Client1.Controllers
     public class ProductsController : Controller
     {
         private readonly IConfiguration _configuration;
+        private readonly IApiResourceHttpClient _apiResourceHttpClient;
 
-        public ProductsController(IConfiguration configuration)
+        public ProductsController(IConfiguration configuration, IApiResourceHttpClient apiResourceHttpClient)
         {
             _configuration = configuration;
+            _apiResourceHttpClient = apiResourceHttpClient;
         }
 
         public async Task<IActionResult> Index()
         {
-            var httpClient = new HttpClient();
-
-            var accessToken = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
-
-            httpClient.SetBearerToken(accessToken);
+            var httpClient = await _apiResourceHttpClient.GetHttpClient();
 
             var response = await httpClient.GetAsync("https://localhost:5001/api/products/getproducts");
             // httpClient.PostAsync();
