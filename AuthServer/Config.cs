@@ -76,6 +76,7 @@ namespace AuthServer
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email,
                         // Refresh token scope
                         IdentityServerConstants.StandardScopes.OfflineAccess,
                         "api1.read",
@@ -139,6 +140,7 @@ namespace AuthServer
                 // Token'a subject id ekler. Hangi kullanıcı için üretildiğini belirtir.
                 new IdentityResources.OpenId(), // subId
                 new IdentityResources.Profile(),
+                new IdentityResources.Email(),
                 new IdentityResource("CountryAndCity", "Country and City", new[] {"country", "city"}),
                 new IdentityResource("Roles", "Roles", new[] { "role" })
             };

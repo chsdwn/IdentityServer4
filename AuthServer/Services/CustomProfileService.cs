@@ -27,9 +27,8 @@ namespace AuthServer.Services
             // access_token ile /userinfo/ endpoint'inden alınacak claimler.
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(ClaimTypes.Name, user.Username),
+                new Claim("email", user.Email),
+                new Claim("name", user.Username),
                 new Claim("city", user.City)
             };
 

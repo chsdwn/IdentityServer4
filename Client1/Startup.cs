@@ -54,6 +54,7 @@ namespace Client1
                 options.SaveTokens = true;
 
                 options.Scope.Add("api1.read");
+                options.Scope.Add("email");
                 // Refresh token scope
                 options.Scope.Add("offline_access");
                 options.Scope.Add("CountryAndCity");
@@ -69,7 +70,9 @@ namespace Client1
                 // role claim'ine bakacak.
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    RoleClaimType = "role"
+                    RoleClaimType = "role",
+                    // User.Identiy.Name olarak tanıması için
+                    NameClaimType = "name"
                 };
             });
 
