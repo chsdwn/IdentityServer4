@@ -150,7 +150,29 @@ namespace AuthServer
                     RedirectUris = { "http://localhost:4200/callback" },
                     PostLogoutRedirectUris = { "http://localhost:4200" },
                     AllowedCorsOrigins = { "http://localhost:4200" },
-                }
+                },
+                new Client
+                {
+                    ClientId = "Client_ResourceOwner_MVC",
+                    ClientName = "Client Resource Owner MVC",
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email,
+                        // Refresh token scope
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
+                        "api1.read",
+                        "CountryAndCity",
+                        "Roles"
+                    },
+                    AccessTokenLifetime = 2 * 60 * 60,
+                    AllowOfflineAccess = true,
+                    RefreshTokenUsage = TokenUsage.ReUse,
+                    AbsoluteRefreshTokenLifetime = (int)(DateTime.UtcNow.AddDays(60) - DateTime.UtcNow).TotalSeconds
+                },
             };
         }
 
