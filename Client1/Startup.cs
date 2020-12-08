@@ -28,6 +28,7 @@ namespace Client1
         {
             services.AddHttpContextAccessor();
 
+            // Her istekte yeni bir tane oluşturulur.
             services.AddScoped<IApiResourceHttpClient, ApiResourceHttpClient>();
 
             services.AddAuthentication(options =>

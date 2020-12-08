@@ -21,7 +21,7 @@ namespace IdentityAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignUpAsync(SignUpViewModel model)
+        public async Task<IActionResult> SignUp(SignUpViewModel model)
         {
             var user = new ApplicationUser();
             user.UserName = model.Username;

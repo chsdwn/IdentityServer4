@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using Client1.Models;
 using IdentityModel.Client;
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Newtonsoft.Json;
 
 namespace Client1.Controllers
 {
@@ -105,9 +107,34 @@ namespace Client1.Controllers
         public IActionResult SignUp() => View();
 
         [HttpPost]
-        public IActionResult SignUp(SignUpViewModel model)
+        public async Task<IActionResult> SignUp(SignUpViewModel model)
         {
-            return RedirectToAction("Index", "Users");
+            var client = new HttpClient();
+
+            var discovery = await client.GetDiscoveryDocumentAsync(_configuration["AuthServerUrl"]);
+            if (discovery.IsError)
+                Console.WriteLine(discovery.Error);
+
+            var tokenReq = new ClientCredentialsTokenRequest();
+            tokenReq.ClientId = _configuration["ClientResourceOwner:ClientId"];
+            tokenReq.ClientSecret = _configuration["ClientResourceOwner:ClientSecret"];
+            tokenReq.Address = discovery.TokenEndpoint;
+
+            var tokenRes = await client.RequestClientCredentialsTokenAsync(tokenReq);
+            if (tokenRes.IsError)
+                Console.WriteLine(tokenRes.Error);
+
+            client.SetBearerToken(tokenRes.AccessToken);
+
+            // SignUpViewModel'i json'a cevirir.
+            var stringContent = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+            var response = await client.PostAsync("https://localhost:4001/api/user/signup", stringContent);
+            if (response.IsSuccessStatusCode)
+                return RedirectToAction("Index", "Users");
+
+            var errorJson = await response.Content.ReadAsStringAsync();
+            var errorList = JsonConvert.DeserializeObject<List<string>>(errorJson);
+            return BadRequest(errorList);
         }
     }
 }
