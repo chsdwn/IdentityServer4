@@ -39,6 +39,9 @@ namespace AuthServer
             var assemblyName = typeof(Startup).Assembly.GetName().Name;
 
             services.AddIdentityServer()
+                /* ConfigurationDbContext için ayrı PersistedGrantDbContext için ayrı migration oluşturulmalı.
+                    ConfigurationDbContext: dotnet ef migrations add Initial -c ConfigurationDbContext
+                    PersistedGrantDbContext: dotnet ef migrations add Initial -c PersistedGrantDbContext */
                 // ConfigurationDbContext: client, resource ve scope'ları veritabanına kaydeder.
                 .AddConfigurationStore(options =>
                 {
@@ -46,7 +49,7 @@ namespace AuthServer
                         => builder.UseSqlite(sqliteConStr, sqliteOptions
                             => sqliteOptions.MigrationsAssembly(assemblyName));
                 })
-                // PersistentGrantDbContext: refresh token, authorize code'u veritabanına kaydeder.
+                // PersistedGrantDbContext: refresh token, authorize code'u veritabanına kaydeder.
                 .AddOperationalStore(options =>
                 {
                     options.ConfigureDbContext = builder
