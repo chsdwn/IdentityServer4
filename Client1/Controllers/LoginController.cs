@@ -9,6 +9,7 @@ using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
@@ -45,7 +46,11 @@ namespace Client1.Controllers
 
             var tokenRes = await client.RequestPasswordTokenAsync(passwordReq);
             if (tokenRes.IsError)
+            {
+                ModelState.AddModelError("", "Email veya şifre yanlış.");
                 Console.WriteLine(tokenRes.Error);
+                return View();
+            }
 
             var userInfoReq = new UserInfoRequest();
             userInfoReq.Token = tokenRes.AccessToken;

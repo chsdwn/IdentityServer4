@@ -33,50 +33,53 @@ namespace Client1
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = "Cookies";
-                options.DefaultChallengeScheme = "oidc";
+                // options.DefaultChallengeScheme = "oidc";
             }).AddCookie("Cookies", options =>
             {
                 options.AccessDeniedPath = "/Home/AccessDenied";
-            }).AddOpenIdConnect("oidc", options =>
-            {
-                options.SignInScheme = "Cookies";
-                // Yetkili. Token gönderen.
-                options.Authority = "https://localhost:4001";
-                options.ClientId = "Client1_MVC";
-                options.ClientSecret = "secret";
-                // code: Authorization code. id_token: doğrulama kodu. token: access token
-                options.ResponseType = "code id_token";
-                // Access token'da claim bilgileri bulunmaz. Scope'lar bulunur.
-                // Giriş yapıldıktan sonra user endpoint'ten claim'ler alınır.
-                // Bütün claimleri çekip, giriş yapmış olan kullanıcının bilgilerine ekler.
-                options.GetClaimsFromUserInfoEndpoint = true;
-                // Access ve refresh token değerlerini cookie'ye ekler.
-                options.SaveTokens = true;
-
-                options.Scope.Add("api1.read");
-                options.Scope.Add("email");
-                // Refresh token scope
-                options.Scope.Add("offline_access");
-                options.Scope.Add("CountryAndCity");
-                options.Scope.Add("Roles");
-
-                // Custom claim'ler manuel olarak map'lenmeli. Yoksa user claim'leri içinde görünmez.
-                // CountryAndCity: { "country", "city" }
-                options.ClaimActions.MapUniqueJsonKey("country", "country");
-                options.ClaimActions.MapUniqueJsonKey("city", "city");
-                options.ClaimActions.MapUniqueJsonKey("role", "role");
-
-                // [Authorize(Roles = "")] attribute'u kullanıldığı zaman role'ü kontrol etmek için
-                // role claim'ine bakacak.
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    // *Resource Owner Credentials grant'te çalışmaz
-                    RoleClaimType = "role",
-                    // *Resource Owner Credentials grant'te çalışmaz
-                    // User.Identiy.Name olarak tanıması için
-                    NameClaimType = "name"
-                };
+                options.LoginPath = "/Login/";
             });
+            // *Resource Owner tipinde manuel olarak yapılıyor.
+            // .AddOpenIdConnect("oidc", options =>
+            // {
+            //     options.SignInScheme = "Cookies";
+            //     // Yetkili. Token gönderen.
+            //     options.Authority = "https://localhost:4001";
+            //     options.ClientId = "Client1_MVC";
+            //     options.ClientSecret = "secret";
+            //     // code: Authorization code. id_token: doğrulama kodu. token: access token
+            //     options.ResponseType = "code id_token";
+            //     // Access token'da claim bilgileri bulunmaz. Scope'lar bulunur.
+            //     // Giriş yapıldıktan sonra user endpoint'ten claim'ler alınır.
+            //     // Bütün claimleri çekip, giriş yapmış olan kullanıcının bilgilerine ekler.
+            //     options.GetClaimsFromUserInfoEndpoint = true;
+            //     // Access ve refresh token değerlerini cookie'ye ekler.
+            //     options.SaveTokens = true;
+
+            //     options.Scope.Add("api1.read");
+            //     options.Scope.Add("email");
+            //     // Refresh token scope
+            //     options.Scope.Add("offline_access");
+            //     options.Scope.Add("CountryAndCity");
+            //     options.Scope.Add("Roles");
+
+            //     // Custom claim'ler manuel olarak map'lenmeli. Yoksa user claim'leri içinde görünmez.
+            //     // CountryAndCity: { "country", "city" }
+            //     options.ClaimActions.MapUniqueJsonKey("country", "country");
+            //     options.ClaimActions.MapUniqueJsonKey("city", "city");
+            //     options.ClaimActions.MapUniqueJsonKey("role", "role");
+
+            //     // [Authorize(Roles = "")] attribute'u kullanıldığı zaman role'ü kontrol etmek için
+            //     // role claim'ine bakacak.
+            //     options.TokenValidationParameters = new TokenValidationParameters
+            //     {
+            //         // *Resource Owner Credentials grant'te çalışmaz
+            //         RoleClaimType = "role",
+            //         // *Resource Owner Credentials grant'te çalışmaz
+            //         // User.Identiy.Name olarak tanıması için
+            //         NameClaimType = "name"
+            //     };
+            // });
 
             services.AddControllersWithViews();
         }

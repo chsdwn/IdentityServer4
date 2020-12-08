@@ -27,13 +27,16 @@ namespace Client1.Controllers
             return View();
         }
 
-        public async Task Logout()
+        public async Task<IActionResult> Logout()
         {
             // Hangi üyelik tipinden çıkış yaptığını belirtmek için scheme değişkenini giriyoruz.
             // Uygulamada çıkış yapar.
             await HttpContext.SignOutAsync("Cookies");
             // IdentityServer'da çıkış yapar.
-            await HttpContext.SignOutAsync("oidc");
+            // Resource Owner tipinde gerek yok. Uygulama üzerinden çıkış yapılıyor.
+            // await HttpContext.SignOutAsync("oidc");
+
+            return RedirectToAction("Index", "Login");
         }
 
         // Kullanıcının access token'ı ile işlem yapmak istediği zaman hata alırsa
