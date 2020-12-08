@@ -41,7 +41,8 @@ namespace AuthServer
                 // .AddTestUsers(Config.GetTestUsers().ToList())
                 // Geliştirme esnasında public ve private keyi otomatik oluşturur.
                 .AddDeveloperSigningCredential()
-                .AddProfileService<CustomProfileService>();
+                .AddProfileService<CustomProfileService>()
+                .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>();
 
             services.AddControllersWithViews();
         }
