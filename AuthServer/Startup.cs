@@ -56,10 +56,10 @@ namespace AuthServer
                         => builder.UseSqlite(sqliteConStr, sqliteOptions
                             => sqliteOptions.MigrationsAssembly(assemblyName));
                 })
-                .AddInMemoryApiResources(Config.GetApiResources())
-                .AddInMemoryApiScopes(Config.GetApiScopes())
-                .AddInMemoryClients(Config.GetClients())
-                .AddInMemoryIdentityResources(Config.GetIdentityResources())
+                // .AddInMemoryApiResources(Config.GetApiResources())
+                // .AddInMemoryApiScopes(Config.GetApiScopes())
+                // .AddInMemoryClients(Config.GetClients())
+                // .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 // .AddTestUsers(Config.GetTestUsers().ToList())
                 // Geliştirme esnasında public ve private keyi otomatik oluşturur.
                 .AddDeveloperSigningCredential()
