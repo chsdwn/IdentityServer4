@@ -1,0 +1,25 @@
+@model Client1.Models.SignUpViewModel
+
+<h1>SignUp</h1>
+
+<form asp-action="Index">
+    <div>
+        <input asp-for="Username" placeholder="Username" />
+    </div>
+    <div>
+        <input asp-for="Email" placeholder="Email" />
+    </div>
+    <div>
+        <input asp-for="Password" type="password" placeholder="Password" />
+    </div>
+    <div>
+        <input asp-for="City" placeholder="City" />
+    </div>
+    <div>
+        <Button type="submit">Kayıt</Button>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

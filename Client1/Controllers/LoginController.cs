@@ -23,10 +23,7 @@ namespace Client1.Controllers
             _configuration = configuration;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public IActionResult Index() => View();
 
         [HttpPost]
         public async Task<IActionResult> Index(LoginViewModel model)
@@ -102,6 +99,14 @@ namespace Client1.Controllers
                 principal,
                 authenticationProperties);
 
+            return RedirectToAction("Index", "Users");
+        }
+
+        public IActionResult SignUp() => View();
+
+        [HttpPost]
+        public IActionResult SignUp(SignUpViewModel model)
+        {
             return RedirectToAction("Index", "Users");
         }
     }
