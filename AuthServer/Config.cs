@@ -153,8 +153,8 @@ namespace AuthServer
                 },
                 new Client
                 {
-                    ClientId = "Client_ResourceOwner_MVC",
-                    ClientName = "Client Resource Owner MVC",
+                    ClientId = "Client1_ResourceOwner_MVC",
+                    ClientName = "Client1 Resource Owner MVC",
                     ClientSecrets = { new Secret("secret".Sha256()) },
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     AllowedScopes =
