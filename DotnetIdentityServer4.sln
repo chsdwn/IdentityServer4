@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API1", "API1\API1.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API2", "API2\API2.csproj", "{26222A8B-F99C-4BF6-BBF9-7CF1C7ABEA48}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityAPI", "IdentityAPI\IdentityAPI.csproj", "{0AF7C76B-9498-47DB-8908-258C4254097D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -98,5 +100,17 @@ Global
 		{26222A8B-F99C-4BF6-BBF9-7CF1C7ABEA48}.Release|x64.Build.0 = Release|Any CPU
 		{26222A8B-F99C-4BF6-BBF9-7CF1C7ABEA48}.Release|x86.ActiveCfg = Release|Any CPU
 		{26222A8B-F99C-4BF6-BBF9-7CF1C7ABEA48}.Release|x86.Build.0 = Release|Any CPU
+		{0AF7C76B-9498-47DB-8908-258C4254097D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AF7C76B-9498-47DB-8908-258C4254097D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AF7C76B-9498-47DB-8908-258C4254097D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0AF7C76B-9498-47DB-8908-258C4254097D}.Debug|x64.Build.0 = Debug|Any CPU
+		{0AF7C76B-9498-47DB-8908-258C4254097D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0AF7C76B-9498-47DB-8908-258C4254097D}.Debug|x86.Build.0 = Debug|Any CPU
+		{0AF7C76B-9498-47DB-8908-258C4254097D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AF7C76B-9498-47DB-8908-258C4254097D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AF7C76B-9498-47DB-8908-258C4254097D}.Release|x64.ActiveCfg = Release|Any CPU
+		{0AF7C76B-9498-47DB-8908-258C4254097D}.Release|x64.Build.0 = Release|Any CPU
+		{0AF7C76B-9498-47DB-8908-258C4254097D}.Release|x86.ActiveCfg = Release|Any CPU
+		{0AF7C76B-9498-47DB-8908-258C4254097D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
