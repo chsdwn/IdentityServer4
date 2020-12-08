@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using AuthServer.Data;
 using AuthServer.Services;
@@ -26,14 +27,32 @@ namespace AuthServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var sqliteConStr = "Data Source=AuthServer.db";
+
             services.AddScoped<ICustomUserRepository, CustomUserRepository>();
 
             services.AddDbContext<AppDbContext>(builder =>
             {
-                builder.UseSqlite("Data Source=AuthServer.db");
+                builder.UseSqlite(sqliteConStr);
             });
 
+            var assemblyName = typeof(Startup).Assembly.GetName().Name;
+
             services.AddIdentityServer()
+                // ConfigurationDbContext: client, resource ve scope'ları veritabanına kaydeder.
+                .AddConfigurationStore(options =>
+                {
+                    options.ConfigureDbContext = builder
+                        => builder.UseSqlite(sqliteConStr, sqliteOptions
+                            => sqliteOptions.MigrationsAssembly(assemblyName));
+                })
+                // PersistentGrantDbContext: refresh token, authorize code'u veritabanına kaydeder.
+                .AddOperationalStore(options =>
+                {
+                    options.ConfigureDbContext = builder
+                        => builder.UseSqlite(sqliteConStr, sqliteOptions
+                            => sqliteOptions.MigrationsAssembly(assemblyName));
+                })
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryApiScopes(Config.GetApiScopes())
                 .AddInMemoryClients(Config.GetClients())
