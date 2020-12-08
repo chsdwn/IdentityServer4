@@ -57,18 +57,21 @@ namespace Client1.Controllers
 
             var identity = new ClaimsIdentity(
                 userInfoRes.Claims,
-                CookieAuthenticationDefaults.AuthenticationScheme);
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                "name",     // NameClaimType
+                "role");    // RoleClaimType
 
             var principal = new ClaimsPrincipal(identity);
 
             var authenticationProperties = new AuthenticationProperties();
             var authenticationTokens = new List<AuthenticationToken>
             {
-                new AuthenticationToken
-                {
-                    Name = OpenIdConnectParameterNames.IdToken,
-                    Value = tokenRes.IdentityToken
-                },
+                // Hybrid akış olmadığı için id_token dönmez
+                // new AuthenticationToken
+                // {
+                //     Name = OpenIdConnectParameterNames.IdToken,
+                //     Value = tokenRes.IdentityToken
+                // },
                 new AuthenticationToken
                 {
                     Name = OpenIdConnectParameterNames.AccessToken,
@@ -89,9 +92,12 @@ namespace Client1.Controllers
             };
             authenticationProperties.StoreTokens(authenticationTokens);
 
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                principal,
+                authenticationProperties);
 
-            return RedirectToAction("User", "Index");
+            return RedirectToAction("Index", "Users");
         }
     }
 }

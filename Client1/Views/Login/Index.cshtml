@@ -3,18 +3,17 @@
 <h1>Login</h1>
 
 <form asp-action="Index">
-    <div asp-validation-summary="ModelOnly"></div>
     <div>
-        <label asp-for="Email" class="control-label"></label>
-        <input asp-for="Email" />
-        <span asp-validation-for="Email"></span>
+        <input asp-for="Email" placeholder="Email" />
     </div>
     <div>
-        <label asp-for="Password" class="control-label"></label>
-        <input type="password" asp-for="Password" />
-        <span asp-validation-for="Password"></span>
+        <input asp-for="Password" type="password" placeholder="Password" />
     </div>
     <div>
-        <input type="submit" value="Giriş yap" />
+        <Button type="submit">Giriş Yap</Button>
     </div>
 </form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

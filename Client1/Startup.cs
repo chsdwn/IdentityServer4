@@ -70,7 +70,9 @@ namespace Client1
                 // role claim'ine bakacak.
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
+                    // *Resource Owner Credentials grant'te çalışmaz
                     RoleClaimType = "role",
+                    // *Resource Owner Credentials grant'te çalışmaz
                     // User.Identiy.Name olarak tanıması için
                     NameClaimType = "name"
                 };
