@@ -28,6 +28,10 @@ namespace IdentityAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // API gibi davranacak. Endpoint'lere ulaşmak için token gerekli.
+            // [Authorize(LocalApi.PolicyName)] erişilmesi için gerekli ayarları etkinleştirir.
+            services.AddLocalApiAuthentication();
+
             services.AddControllersWithViews();
 
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -74,7 +78,6 @@ namespace IdentityAPI
             if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
             }
 
             app.UseStaticFiles();
