@@ -53,8 +53,8 @@ namespace Client1.Controllers
                 Console.WriteLine(discovery.Error);
 
             var refreshTokenReq = new RefreshTokenRequest();
-            refreshTokenReq.ClientId = _configuration["ClientMVC:ClientId"];
-            refreshTokenReq.ClientSecret = _configuration["ClientMVC:ClientSecret"];
+            refreshTokenReq.ClientId = _configuration["ClientResourceOwner:ClientId"];
+            refreshTokenReq.ClientSecret = _configuration["ClientResourceOwner:ClientSecret"];
             refreshTokenReq.RefreshToken = refreshToken;
             refreshTokenReq.Address = discovery.TokenEndpoint;
 
